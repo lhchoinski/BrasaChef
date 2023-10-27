@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AssadosCombate_API.Data;
 using AssadosCombate_API.Models;
@@ -23,6 +18,7 @@ namespace AssadosCombate_API.Controllers
 
         // GET: api/Pedido
         [HttpGet]
+        [Route("getAll")]
         public async Task<ActionResult<IEnumerable<Pedido>>> GetPedidos()
         {
           if (_context.Pedidos == null)
@@ -34,6 +30,7 @@ namespace AssadosCombate_API.Controllers
 
         // GET: api/Pedido/5
         [HttpGet("{id}")]
+        [Route("getById/{id}")]
         public async Task<ActionResult<Pedido>> GetPedido(int id)
         {
           if (_context.Pedidos == null)
@@ -52,7 +49,8 @@ namespace AssadosCombate_API.Controllers
 
         // PUT: api/Pedido/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut]
+        [Route("put/{id}")]
         public async Task<IActionResult> PutPedido(int id, Pedido pedido)
         {
             if (id != pedido.Id)
@@ -81,23 +79,43 @@ namespace AssadosCombate_API.Controllers
             return NoContent();
         }
 
-        // POST: api/Pedido
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Pedido>> PostPedido(Pedido pedido)
+       [HttpPost]
+        [Route("post")]
+        public IActionResult Post([FromBody] Pedido pedido)
         {
-          if (_context.Pedidos == null)
-          {
-              return Problem("Entity set 'AppDataContext.Pedidos'  is null.");
-          }
-            _context.Pedidos.Add(pedido);
-            await _context.SaveChangesAsync();
+            Cliente cliente = _context.Clientes.Find(pedido.ClienteId);
 
-            return CreatedAtAction("GetPedido", new { id = pedido.Id }, pedido);
+            if (cliente == null)
+            {
+                return NotFound("Cliente não encontrado.");
+            }
+
+            Produto produto = _context.Produtos.Find(pedido.ProdutoId);
+
+            if (produto == null)
+            {
+                return NotFound("Produto não encontrado.");
+            }
+
+            try
+            {
+                pedido.CreatedAt = DateTime.UtcNow;
+                pedido.Cliente = cliente;
+
+                _context.Pedidos.Add(pedido);
+                _context.SaveChanges();
+
+                return Created("", pedido);
+            }
+            catch (Exception e)
+            {
+                return BadRequest($"Erro ao criar Pedido: {e.Message}");
+            }
         }
 
         // DELETE: api/Pedido/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
+        [Route("Delete/{id}")]
         public async Task<IActionResult> DeletePedido(int id)
         {
             if (_context.Pedidos == null)

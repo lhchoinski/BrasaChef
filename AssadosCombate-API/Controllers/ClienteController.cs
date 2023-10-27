@@ -23,6 +23,7 @@ namespace AssadosCombate_API.Controllers
 
         // GET: api/Cliente
         [HttpGet]
+         [Route("getAll")]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
         {
           if (_context.Clientes == null)
@@ -31,6 +32,26 @@ namespace AssadosCombate_API.Controllers
           }
             return await _context.Clientes.ToListAsync();
         }
+
+       [HttpGet]
+    [Route("getByNome/{nome}")]
+    public IActionResult GetByNome([FromRoute] string nome)
+    {
+    try
+    {
+        Cliente cliente = _context.Clientes.FirstOrDefault(x => x.Nome == nome);
+        if (cliente != null)
+        {
+            return Ok(cliente);
+        }
+        return NotFound($"O cliente '{nome}' não foi encontrado.");
+    }
+    catch (Exception e)
+    {
+        return BadRequest($"Erro ao buscar Cliente: {e.Message}");
+    }
+    }
+
 
         // GET: api/Cliente/5
         [HttpGet("{id}")]
@@ -52,7 +73,8 @@ namespace AssadosCombate_API.Controllers
 
         // PUT: api/Cliente/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+         [HttpPut]
+        [Route("put/{id}")]
         public async Task<IActionResult> PutCliente(int id, Cliente cliente)
         {
             if (id != cliente.ClienteId)
@@ -84,6 +106,7 @@ namespace AssadosCombate_API.Controllers
         // POST: api/Cliente
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Route("post")]
         public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
         {
           if (_context.Clientes == null)
@@ -97,7 +120,8 @@ namespace AssadosCombate_API.Controllers
         }
 
         // DELETE: api/Cliente/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
+        [Route("Delete/{id}")]
         public async Task<IActionResult> DeleteCliente(int id)
         {
             if (_context.Clientes == null)
