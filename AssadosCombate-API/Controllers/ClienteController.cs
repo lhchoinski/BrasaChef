@@ -103,20 +103,22 @@ namespace AssadosCombate_API.Controllers
             return NoContent();
         }
 
-        // POST: api/Cliente
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+         [HttpPost]
         [Route("post")]
-        public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
+        public IActionResult Post([FromBody] Cliente cliente)
         {
-          if (_context.Clientes == null)
-          {
-              return Problem("Entity set 'AppDataContext.Clientes'  is null.");
-          }
-            _context.Clientes.Add(cliente);
-            await _context.SaveChangesAsync();
+            try
+            {
+               
+                _context.Clientes.Add(cliente);
+                _context.SaveChanges();
 
-            return CreatedAtAction("GetCliente", new { id = cliente.ClienteId }, cliente);
+                return Created("", cliente);
+            }
+            catch (Exception e)
+            {
+                return BadRequest($"Erro ao criar cliente: {e.Message}");
+            }
         }
 
         // DELETE: api/Cliente/5

@@ -1,0 +1,47 @@
+### Criação de um novo pedido
+POST http://localhost:5074/api/Pedido/post
+Content-Type: application/json
+
+{
+  "pedido": {
+    "ClienteId": 1,
+    "itemPedido": [
+      {
+        "ProdutoId": 1,
+        "quantidade": 2
+      },
+      {
+        "ProdutoId": 3,
+        "quantidade": 3
+      }
+    ]
+  }
+}
+
+
+### Obter todos os pedidos
+GET http://localhost:5074/api/Pedido/getAll
+
+### Pesquisar por ID ou NOME (verifique a rota correta)
+GET http://localhost:5074/api/Pedido/1
+
+### Atualizar um pedido existente pelo ID
+PUT http://localhost:5074/api/Pedido/9
+Content-Type: application/json
+
+{
+  "clienteId": 3,
+  "itens": [
+    {
+      "produtoId": 1,
+      "quantidade": 2
+    },
+    {
+      "produtoId": 2,
+      "quantidade": 3
+    }
+  ]
+}
+
+### Excluir um pedido pelo ID
+DELETE http://localhost:5074/api/Pedido/Delete/5

@@ -1,0 +1,32 @@
+
+POST http://localhost:5074/api/Produto/post
+Content-Type: application/json
+
+{
+  "produtoId": 0,
+  "nome": "Frango",
+  "preco": "17.00"
+}
+
+
+### get all addresses 
+GET http://localhost:5074/api/Produto/getAll
+
+
+### search by ID or NAME, but it's not searching
+GET http://localhost:5074/api/Produto/getByNome/Luiz
+
+### update an existing address by ID 
+PUT http://localhost:5074/api/Produto/alterar/12
+Content-Type: application/json
+
+{
+  "produtoId": 12,
+  "nome": "Nome do Produto",
+  "preco": "19.99"
+}
+
+
+
+### deletion of a address by ID
+DELETE http://localhost:5074/api/Produto/deletar/4

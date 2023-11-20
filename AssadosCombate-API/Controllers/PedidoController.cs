@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using AssadosCombate_API.Data;
 using AssadosCombate_API.Models;
 
+
 namespace AssadosCombate_API.Controllers
 {
     [Route("api/[controller]")]

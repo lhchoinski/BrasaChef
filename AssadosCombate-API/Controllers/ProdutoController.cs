@@ -23,6 +23,7 @@ namespace AssadosCombate_API.Controllers
 
         // GET: api/Produto
         [HttpGet]
+        [Route("getAll")]
         public async Task<ActionResult<IEnumerable<Produto>>> GetProdutos()
         {
           if (_context.Produtos == null)
@@ -52,7 +53,8 @@ namespace AssadosCombate_API.Controllers
 
         // PUT: api/Produto/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut]
+        [Route("alterar/{id}")]
         public async Task<IActionResult> PutProduto(int id, Produto produto)
         {
             if (id != produto.ProdutoId)
@@ -84,6 +86,7 @@ namespace AssadosCombate_API.Controllers
         // POST: api/Produto
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Route("post")]
         public async Task<ActionResult<Produto>> PostProduto(Produto produto)
         {
           if (_context.Produtos == null)
@@ -97,7 +100,8 @@ namespace AssadosCombate_API.Controllers
         }
 
         // DELETE: api/Produto/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
+        [Route("deletar/{id}")]
         public async Task<IActionResult> DeleteProduto(int id)
         {
             if (_context.Produtos == null)
