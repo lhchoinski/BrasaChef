@@ -1,0 +1,15 @@
+<mat-form-field>
+  <mat-label>Cliente</mat-label>
+  <mat-select [(value)]="clienteSelecionado">
+    <mat-option *ngFor="let cliente of clientes" [value]="cliente">{{ cliente.nome }}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Produto</mat-label>
+  <mat-select [(value)]="produtoSelecionado">
+    <mat-option *ngFor="let produto of produtos" [value]="produto">{{ produto.nome }}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<button mat-raised-button color="primary" (click)="cadastrar()">Cadastrar Pedido</button>

@@ -3,8 +3,8 @@ POST http://localhost:5074/api/Pedido/post
 Content-Type: application/json
 
 {
-  "pedido": {
-    "ClienteId": 1,
+  "Pedido": {
+    "clienteId":1,
     "itemPedido": [
       {
         "ProdutoId": 1,

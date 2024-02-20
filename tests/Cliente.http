@@ -13,10 +13,10 @@ GET http://localhost:5074/api/Cliente/getAll
 
 
 ### search by ID or NAME, but it's not searching
-GET http://localhost:5074/api/Cliente/getByNome/Luiz
+GET http://localhost:5074/api/Cliente/1
 
 ### update an existing address by ID 
-PUT http://localhost:5074/api/Cliente/9
+PUT http://localhost:5074/api/Cliente/put/3
 Content-Type: application/json
 
 { 
@@ -27,4 +27,4 @@ Content-Type: application/json
 
 
 ### deletion of a address by ID
-DELETE http://localhost:5074/api/Cliente/9
+DELETE http://localhost:5074/api/Cliente/delete/2

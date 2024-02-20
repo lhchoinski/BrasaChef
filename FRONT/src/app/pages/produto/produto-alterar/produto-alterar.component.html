@@ -14,13 +14,31 @@
       <input placeholder="Ex. Bolacha" matInput type="text" [(ngModel)]="nome" />
     </mat-form-field>
 
+    <mat-form-field class="input" id="qtda">
+      <mat-label>Quantidade</mat-label>
+      <input placeholder="Ex. 123" matInput type="text" [(ngModel)]="qtda" />
+    </mat-form-field>
+
     <mat-form-field class="input" id="preco">
       <mat-label>Preço</mat-label>
       <span matPrefix>R$ &nbsp;</span>
       <input placeholder="Ex. R$ 15,00" matInput type="text" [(ngModel)]="preco" />
     </mat-form-field>
   </mat-card-content>
+  <tr>
+    <td>
+      <mat-card-actions>
+        <button color="" mat-stroked-button routerLink="/pages/produto/listar">Voltar</button>
+      </mat-card-actions>
+</td>
+<td>
   <mat-card-actions>
     <button color="warn" mat-stroked-button (click)="alterar()">Alterar</button>
   </mat-card-actions>
+  
+</td>
+
+  
+</tr>
+  
 </mat-card>

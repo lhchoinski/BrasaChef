@@ -20,13 +20,21 @@ namespace AssadosCombate_API.Controllers
         // GET: api/Pedido
         [HttpGet]
         [Route("getAll")]
-        public async Task<ActionResult<IEnumerable<Pedido>>> GetPedidos()
+        public IActionResult GetAll()
         {
-          if (_context.Pedidos == null)
-          {
-              return NotFound();
-          }
-            return await _context.Pedidos.ToListAsync();
+            try
+            {
+                List<Pedido> pedidos = _context.Pedidos
+                    .Include(x => x.Cliente)
+                    .Include(x => x.ItemPedido)
+                    .ToList();
+
+                return pedidos.Count == 0 ? NotFound("Não existem pedidos!") : Ok(pedidos);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // GET: api/Pedido/5
@@ -34,18 +42,19 @@ namespace AssadosCombate_API.Controllers
         [Route("getById/{id}")]
         public async Task<ActionResult<Pedido>> GetPedido(int id)
         {
-          if (_context.Pedidos == null)
-          {
-              return NotFound();
-          }
-            var pedido = await _context.Pedidos.FindAsync(id);
-
-            if (pedido == null)
+            try
             {
-                return NotFound();
-            }
+                List<Pedido> pedidos = _context.Pedidos
+                    .Include(x => x.Cliente)
+                    .Include(x => x.ItemPedido)
+                    .ToList();
 
-            return pedido;
+                return pedidos.Count == 0 ? NotFound("Não existem pedidos!") : Ok(pedidos);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // PUT: api/Pedido/5
@@ -84,35 +93,39 @@ namespace AssadosCombate_API.Controllers
         [Route("post")]
         public IActionResult Post([FromBody] Pedido pedido)
         {
-            Cliente cliente = _context.Clientes.Find(pedido.ClienteId);
 
-            if (cliente == null)
-            {
-                return NotFound("Cliente não encontrado.");
-            }
+        try
+        {
 
-            Produto produto = _context.Produtos.Find(pedido.ProdutoId);
+        Cliente cliente = _context.Clientes.Find(pedido.ClienteId);
 
-            if (produto == null)
-            {
-                return NotFound("Produto não encontrado.");
-            }
-
-            try
-            {
-                pedido.CreatedAt = DateTime.UtcNow;
-                pedido.Cliente = cliente;
-
-                _context.Pedidos.Add(pedido);
-                _context.SaveChanges();
-
-                return Created("", pedido);
-            }
-            catch (Exception e)
-            {
-                return BadRequest($"Erro ao criar Pedido: {e.Message}");
-            }
+        if (cliente == null)
+        {
+            return NotFound("O cliente informado não existe!");
         }
+
+        Produto produto = _context.Produtos.Find(pedido.ProdutoId);
+
+        if (produto == null)
+        {
+            return NotFound("O produto informado não existe!");
+        }
+
+        // Se o cliente e o produto existem, prossegue com a criação do pedido
+        pedido.CreatedAt = DateTime.UtcNow;
+        pedido.Cliente = cliente;
+
+        _context.Pedidos.Add(pedido);
+        _context.SaveChanges();
+
+        return Created("", pedido);
+    }
+    catch (Exception e)
+    {
+        return BadRequest(e.Message);
+    }
+}
+
 
         // DELETE: api/Pedido/5
         [HttpDelete]

@@ -2,7 +2,6 @@ import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
-import { Categoria } from "src/app/models/categoria.model";
 import { Produto } from "src/app/models/produto.model";
 
 @Component({
@@ -13,6 +12,7 @@ import { Produto } from "src/app/models/produto.model";
 export class ProdutoCadastrarComponent {
   nome: string = "";
   preco: string = "";
+  qtda: string = "";
  
 
   constructor(
@@ -26,6 +26,7 @@ export class ProdutoCadastrarComponent {
     let produto: Produto = {
       nome: this.nome,
       preco: this.preco,
+      qtda:  this.qtda
     };
 
     this.client
@@ -38,9 +39,9 @@ export class ProdutoCadastrarComponent {
         next: (produto) => {
           this.snackBar.open(
             "Produto cadastrado com sucesso!!",
-            "E-commerce",
+            "Brasa Chef",
             {
-              duration: 1500,
+              duration: 2000,
               horizontalPosition: "right",
               verticalPosition: "top",
             }

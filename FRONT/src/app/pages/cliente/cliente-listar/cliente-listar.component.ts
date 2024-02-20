@@ -5,23 +5,24 @@ import {
   MatTable,
   MatTableDataSource,
 } from "@angular/material/table";
+import { Cliente } from "src/app/models/cliente.model";
 import { Produto } from "src/app/models/produto.model";
 
 @Component({
-  selector: "app-produto-listar",
-  templateUrl: "./produto-listar.component.html",
-  styleUrls: ["./produto-listar.component.css"],
+  selector: "app-cliente-listar",
+  templateUrl: "./cliente-listar.component.html",
+  styleUrls: ["./cliente-listar.component.css"],
 })
-export class ProdutoListarComponent {
+export class ClienteListarComponent {
   colunasTabela: string[] = [
     "id",
     "nome",
-    "preco",
-    "qtda",
+    "contato",
+    "endereco",
     "deletar",
     "alterar",
   ];
-  produtos: Produto[] = [];
+  clientes: Cliente[] = [];
   router: any;
 
   constructor(
@@ -34,12 +35,12 @@ export class ProdutoListarComponent {
 
   ngOnInit(): void {
     this.client
-      .get<Produto[]>("https://localhost:7119/api/Produto/getAll")
+      .get<Cliente[]>("https://localhost:7119/api/Cliente/getAll")
       .subscribe({
         //Requisição com sucesso
-        next: (produtos) => {
-          console.table(produtos);
-          this.produtos = produtos;
+        next: (clientes) => {
+          console.table(clientes);
+          this.clientes = clientes;
         },
         //Requisição com erro
         error: (erro) => {
@@ -48,10 +49,10 @@ export class ProdutoListarComponent {
       });
   }
 
-  deletar(produtoId: number) {
+  deletar(clienteId: number) {
     this.client
-      .delete<Produto[]>(
-        `https://localhost:7119/api/Produto/deletar/${produtoId}`
+      .delete<Cliente[]>(
+        `https://localhost:7119/api/Cliente/delete/${clienteId}`
       )
       .subscribe({
         next: (produto) => {

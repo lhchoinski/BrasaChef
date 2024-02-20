@@ -1,5 +1,5 @@
-﻿namespace AssadosCombate_API.Models
-{
+﻿namespace AssadosCombate_API.Models;
+
     public class Cliente
     {
         public int ClienteId { get; set; }
@@ -7,4 +7,4 @@
         public string? Contato { get; set; }
         public string? Endereco { get; set; }
     }
-}
+

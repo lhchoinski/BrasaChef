@@ -6,3 +6,15 @@ td,
 th {
   text-align: center;
 }
+
+.item{
+  display: flex;
+  align-items: center;
+  
+}
+
+
+.material-symbols-outlined{
+
+margin: 1px;
+}

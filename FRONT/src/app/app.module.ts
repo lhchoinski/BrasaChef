@@ -20,6 +20,11 @@ import { ProdutoCadastrarComponent } from "./pages/produto/produto-cadastrar/pro
 import { FormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ProdutoAlterarComponent } from './pages/produto/produto-alterar/produto-alterar.component';
+import { ClienteListarComponent } from './pages/cliente/cliente-listar/cliente-listar.component';
+import { ClienteCadastrarComponent } from './pages/cliente/cliente-cadastrar/cliente-cadastrar/cliente-cadastrar.component';
+import { ClienteAlterarComponent } from './pages/cliente/cliente-alterar/cliente-alterar.component';
+import { PedidoListarComponent } from './pages/pedido/pedido-listar/pedido-listar.component';
+import { PedidoCadastrarComponent } from './pages/pedido/pedido-cadastrar/pedido-cadastrar.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +32,11 @@ import { ProdutoAlterarComponent } from './pages/produto/produto-alterar/produto
     ProdutoListarComponent,
     ProdutoCadastrarComponent,
     ProdutoAlterarComponent,
+    ClienteListarComponent,
+    ClienteCadastrarComponent,
+    ClienteAlterarComponent,
+    PedidoListarComponent,
+    PedidoCadastrarComponent,
   ],
   imports: [
     BrowserModule,
