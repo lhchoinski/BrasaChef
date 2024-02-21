@@ -21,24 +21,24 @@ namespace AssadosCombate_API.Controllers
         }
 
         // GET: api/Pedido/getAll
-[HttpGet("getAll")]
-public IActionResult GetAll()
-{
-    try
-    {
-        List<Pedido> pedidos = _context.Pedidos
-            .Include(x => x.Cliente)
-            .Include(x => x.Itens) // Inclui a lista de itens do pedido
-                .ThenInclude(x => x.ProdutoId) // Inclui o produto associado a cada item do pedido
-            .ToList();
+        [HttpGet("getAll")]
+        public IActionResult GetAll()
+        {
+            try
+            {
+                List<Pedido> pedidos = _context.Pedidos
+                    .Include(x => x.Cliente)
+                    .Include(x => x.Itens) // Inclui a lista de itens do pedido
+                        .ThenInclude(x => x.Produto) // Inclui o produto associado a cada item do pedido
+                    .ToList();
 
-        return pedidos.Count == 0 ? NotFound("Não existem pedidos!") : Ok(pedidos);
-    }
-    catch (Exception e)
-    {
-        return BadRequest(e.Message);
-    }
-}
+                return pedidos.Count == 0 ? NotFound("Não existem pedidos!") : Ok(pedidos);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
         // GET: api/Pedido/5
         [HttpGet("{id}")]
@@ -50,7 +50,7 @@ public IActionResult GetAll()
                 Pedido pedido = await _context.Pedidos
                     .Include(x => x.Cliente)
                     .Include(x => x.Itens)
-                        .ThenInclude(x => x.ProdutoId)
+                        .ThenInclude(x => x.Produto) // Inclui o produto associado a cada item do pedido
                     .FirstOrDefaultAsync(x => x.PedidoId == id);
 
                 return pedido == null ? NotFound("Pedido não encontrado!") : Ok(pedido);
@@ -60,7 +60,6 @@ public IActionResult GetAll()
                 return BadRequest(e.Message);
             }
         }
-
         // PUT: api/Pedido/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -93,41 +92,41 @@ public IActionResult GetAll()
             return NoContent();
         }
 
-       // POST: api/Pedido
-[HttpPost]
-[Route("post")]
-public IActionResult Post([FromBody] Pedido pedido)
-{
-    try
-    {
-        Cliente cliente = _context.Clientes.Find(pedido.ClienteId);
-
-        if (cliente == null)
+        // POST: api/Pedido
+        [HttpPost]
+        [Route("post")]
+        public IActionResult Post([FromBody] Pedido pedido)
         {
-            return NotFound("O cliente informado não existe!");
+            try
+            {
+                Cliente cliente = _context.Clientes.Find(pedido.ClienteId);
+
+                if (cliente == null)
+                {
+                    return NotFound("O cliente informado não existe!");
+                }
+
+                // Se o cliente existe, prossegue com a criação do pedido
+                pedido.CreatedAt = DateTime.UtcNow;
+                pedido.Cliente = cliente;
+
+                // Carregar explicitamente os produtos para cada item do pedido
+                foreach (var item in pedido.Itens)
+                {
+                    // Carregar o produto correspondente ao produtoId do item
+                    item.Produto = _context.Produtos.Find(item.ProdutoId);
+                }
+
+                _context.Pedidos.Add(pedido);
+                _context.SaveChanges();
+
+                return Created("", pedido);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
-
-        // Se o cliente existe, prossegue com a criação do pedido
-        pedido.CreatedAt = DateTime.UtcNow;
-        pedido.Cliente = cliente;
-
-        // Carregar explicitamente os produtos para cada item do pedido
-        foreach (var item in pedido.Itens)
-        {
-            // Carregar o produto correspondente ao produtoId do item
-            item.Produto = _context.Produtos.Find(item.ProdutoId);
-        }
-
-        _context.Pedidos.Add(pedido);
-        _context.SaveChanges();
-
-        return Created("", pedido);
-    }
-    catch (Exception e)
-    {
-        return BadRequest(e.Message);
-    }
-}
 
 
         // DELETE: api/Pedido/5
