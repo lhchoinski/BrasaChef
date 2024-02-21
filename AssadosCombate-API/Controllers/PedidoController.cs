@@ -2,7 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using AssadosCombate_API.Data;
 using AssadosCombate_API.Models;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AssadosCombate_API.Controllers
 {
@@ -17,25 +20,25 @@ namespace AssadosCombate_API.Controllers
             _context = context;
         }
 
-        // GET: api/Pedido
-        [HttpGet]
-        [Route("getAll")]
-        public IActionResult GetAll()
-        {
-            try
-            {
-                List<Pedido> pedidos = _context.Pedidos
-                    .Include(x => x.Cliente)
-                    .Include(x => x.Produto)
-                    .ToList();
+        // GET: api/Pedido/getAll
+[HttpGet("getAll")]
+public IActionResult GetAll()
+{
+    try
+    {
+        List<Pedido> pedidos = _context.Pedidos
+            .Include(x => x.Cliente)
+            .Include(x => x.Itens) // Inclui a lista de itens do pedido
+                .ThenInclude(x => x.ProdutoId) // Inclui o produto associado a cada item do pedido
+            .ToList();
 
-                return pedidos.Count == 0 ? NotFound("Não existem pedidos!") : Ok(pedidos);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
+        return pedidos.Count == 0 ? NotFound("Não existem pedidos!") : Ok(pedidos);
+    }
+    catch (Exception e)
+    {
+        return BadRequest(e.Message);
+    }
+}
 
         // GET: api/Pedido/5
         [HttpGet("{id}")]
@@ -44,12 +47,13 @@ namespace AssadosCombate_API.Controllers
         {
             try
             {
-                List<Pedido> pedidos = _context.Pedidos
+                Pedido pedido = await _context.Pedidos
                     .Include(x => x.Cliente)
-                    .Include(x => x.Produto)
-                    .ToList();
+                    .Include(x => x.Itens)
+                        .ThenInclude(x => x.ProdutoId)
+                    .FirstOrDefaultAsync(x => x.PedidoId == id);
 
-                return pedidos.Count == 0 ? NotFound("Não existem pedidos!") : Ok(pedidos);
+                return pedido == null ? NotFound("Pedido não encontrado!") : Ok(pedido);
             }
             catch (Exception e)
             {
@@ -59,7 +63,7 @@ namespace AssadosCombate_API.Controllers
 
         // PUT: api/Pedido/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut]
+        [HttpPut("{id}")]
         [Route("put/{id}")]
         public async Task<IActionResult> PutPedido(int id, Pedido pedido)
         {
@@ -89,14 +93,13 @@ namespace AssadosCombate_API.Controllers
             return NoContent();
         }
 
-       [HttpPost]
-        [Route("post")]
-        public IActionResult Post([FromBody] Pedido pedido)
-        {
-
-        try
-        {
-
+       // POST: api/Pedido
+[HttpPost]
+[Route("post")]
+public IActionResult Post([FromBody] Pedido pedido)
+{
+    try
+    {
         Cliente cliente = _context.Clientes.Find(pedido.ClienteId);
 
         if (cliente == null)
@@ -104,16 +107,16 @@ namespace AssadosCombate_API.Controllers
             return NotFound("O cliente informado não existe!");
         }
 
-        Produto produto = _context.Produtos.Find(pedido.ProdutoId);
-
-        if (produto == null)
-        {
-            return NotFound("O produto informado não existe!");
-        }
-
-        // Se o cliente e o produto existem, prossegue com a criação do pedido
+        // Se o cliente existe, prossegue com a criação do pedido
         pedido.CreatedAt = DateTime.UtcNow;
         pedido.Cliente = cliente;
+
+        // Carregar explicitamente os produtos para cada item do pedido
+        foreach (var item in pedido.Itens)
+        {
+            // Carregar o produto correspondente ao produtoId do item
+            item.Produto = _context.Produtos.Find(item.ProdutoId);
+        }
 
         _context.Pedidos.Add(pedido);
         _context.SaveChanges();
@@ -128,7 +131,7 @@ namespace AssadosCombate_API.Controllers
 
 
         // DELETE: api/Pedido/5
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Route("Delete/{id}")]
         public async Task<IActionResult> DeletePedido(int id)
         {

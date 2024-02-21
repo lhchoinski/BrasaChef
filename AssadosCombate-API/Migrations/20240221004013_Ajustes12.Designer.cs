@@ -3,6 +3,7 @@ using System;
 using AssadosCombate_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AssadosCombate_API.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    partial class AppDataContextModelSnapshot : ModelSnapshot
+    [Migration("20240221004013_Ajustes12")]
+    partial class Ajustes12
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,6 +51,9 @@ namespace AssadosCombate_API.Migrations
                     b.Property<int?>("PedidoId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("PrecoUnitario")
+                        .HasColumnType("decimal(65,30)");
+
                     b.Property<int>("ProdutoId")
                         .HasColumnType("int");
 
@@ -57,8 +63,6 @@ namespace AssadosCombate_API.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PedidoId");
-
-                    b.HasIndex("ProdutoId");
 
                     b.ToTable("ItemPedido");
                 });
@@ -110,14 +114,6 @@ namespace AssadosCombate_API.Migrations
                     b.HasOne("AssadosCombate_API.Models.Pedido", null)
                         .WithMany("Itens")
                         .HasForeignKey("PedidoId");
-
-                    b.HasOne("AssadosCombate_API.Models.Produto", "Produto")
-                        .WithMany()
-                        .HasForeignKey("ProdutoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Produto");
                 });
 
             modelBuilder.Entity("AssadosCombate_API.Models.Pedido", b =>

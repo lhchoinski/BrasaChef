@@ -4,8 +4,8 @@ Content-Type: application/json
 
 {
   "produtoId": 0,
-  "nome": "Frango",
-  "preco": "17.00",
+  "nome": "Costela",
+  "preco": "34.00",
   "qtda": 123
 }
 
@@ -30,4 +30,4 @@ Content-Type: application/json
 
 
 ### deletion of a address by ID
-DELETE http://localhost:5074/api/Produto/deletar/4
+DELETE http://localhost:5074/api/Produto/deletar/2
