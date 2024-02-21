@@ -92,41 +92,62 @@ namespace AssadosCombate_API.Controllers
             return NoContent();
         }
 
-        // POST: api/Pedido
-        [HttpPost]
-        [Route("post")]
-        public IActionResult Post([FromBody] Pedido pedido)
+        // POST: api/Pedido/post
+[HttpPost]
+[Route("post")]
+public IActionResult Post([FromBody] Pedido pedido)
+{
+    try
+    {
+        Cliente cliente = _context.Clientes.Find(pedido.ClienteId);
+
+        if (cliente == null)
         {
-            try
+            return NotFound("O cliente informado não existe!");
+        }
+
+        // Se o cliente existe, prossegue com a criação do pedido
+        pedido.CreatedAt = DateTime.UtcNow;
+        pedido.Cliente = cliente;
+
+        // Calcular o valor total do pedido
+        double valorTotal = 0;
+        foreach (var item in pedido.Itens)
+        {
+            // Carregar o produto correspondente ao produtoId do item
+            Produto produto = _context.Produtos.Find(item.ProdutoId);
+            if (produto == null)
             {
-                Cliente cliente = _context.Clientes.Find(pedido.ClienteId);
-
-                if (cliente == null)
-                {
-                    return NotFound("O cliente informado não existe!");
-                }
-
-                // Se o cliente existe, prossegue com a criação do pedido
-                pedido.CreatedAt = DateTime.UtcNow;
-                pedido.Cliente = cliente;
-
-                // Carregar explicitamente os produtos para cada item do pedido
-                foreach (var item in pedido.Itens)
-                {
-                    // Carregar o produto correspondente ao produtoId do item
-                    item.Produto = _context.Produtos.Find(item.ProdutoId);
-                }
-
-                _context.Pedidos.Add(pedido);
-                _context.SaveChanges();
-
-                return Created("", pedido);
+                return NotFound("O produto do item não existe!");
             }
-            catch (Exception e)
+
+            // Verificar se o preço do produto não é nulo antes de somar ao valor total
+            if (produto.Preco.HasValue)
             {
-                return BadRequest(e.Message);
+                valorTotal += produto.Preco.Value * item.Quantidade;
+            }
+            else
+            {
+                return BadRequest("O preço do produto é nulo!");
             }
         }
+
+        // Definir o valor total calculado no pedido
+        pedido.ValorTotal = valorTotal;
+
+        // Adicionar o pedido ao contexto e salvar no banco de dados
+        _context.Pedidos.Add(pedido);
+        _context.SaveChanges();
+
+        return Created("", pedido);
+    }
+    catch (Exception e)
+    {
+        return BadRequest(e.Message);
+    }
+}
+
+
 
 
         // DELETE: api/Pedido/5

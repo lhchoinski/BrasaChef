@@ -4,8 +4,8 @@ Content-Type: application/json
 
 {
   "produtoId": 0,
-  "nome": "Costela",
-  "preco": "34.00",
+  "nome": "Frango",
+  "preco": "50.00",
   "qtda": 123
 }
 

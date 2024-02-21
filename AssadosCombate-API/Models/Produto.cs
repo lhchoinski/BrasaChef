@@ -4,7 +4,7 @@
     {   
         public int ProdutoId { get; set; }
         public string? Nome { get; set; }
-        public string? Preco { get; set; }
+        public double? Preco { get; set; }
         public int? Qtda { get; set; }
         
     }

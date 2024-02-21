@@ -10,7 +10,7 @@ Content-Type: application/json
       "quantidade": 2
     },
     {
-      "produtoId": 3,
+      "produtoId": 2,
       "quantidade": 1
     }
   ]
