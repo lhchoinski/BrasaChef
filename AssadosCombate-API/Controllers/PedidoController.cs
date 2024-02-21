@@ -26,7 +26,7 @@ namespace AssadosCombate_API.Controllers
             {
                 List<Pedido> pedidos = _context.Pedidos
                     .Include(x => x.Cliente)
-                    .Include(x => x.ItemPedido)
+                    .Include(x => x.Produto)
                     .ToList();
 
                 return pedidos.Count == 0 ? NotFound("Não existem pedidos!") : Ok(pedidos);
@@ -46,7 +46,7 @@ namespace AssadosCombate_API.Controllers
             {
                 List<Pedido> pedidos = _context.Pedidos
                     .Include(x => x.Cliente)
-                    .Include(x => x.ItemPedido)
+                    .Include(x => x.Produto)
                     .ToList();
 
                 return pedidos.Count == 0 ? NotFound("Não existem pedidos!") : Ok(pedidos);
@@ -63,7 +63,7 @@ namespace AssadosCombate_API.Controllers
         [Route("put/{id}")]
         public async Task<IActionResult> PutPedido(int id, Pedido pedido)
         {
-            if (id != pedido.Id)
+            if (id != pedido.PedidoId)
             {
                 return BadRequest();
             }
@@ -150,7 +150,7 @@ namespace AssadosCombate_API.Controllers
 
         private bool PedidoExists(int id)
         {
-            return (_context.Pedidos?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Pedidos?.Any(e => e.PedidoId == id)).GetValueOrDefault();
         }
     }
 }
