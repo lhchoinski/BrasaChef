@@ -25,6 +25,7 @@ import { ClienteCadastrarComponent } from './pages/cliente/cliente-cadastrar/cli
 import { ClienteAlterarComponent } from './pages/cliente/cliente-alterar/cliente-alterar.component';
 import { PedidoListarComponent } from './pages/pedido/pedido-listar/pedido-listar.component';
 import { PedidoCadastrarComponent } from './pages/pedido/pedido-cadastrar/pedido-cadastrar.component';
+import { DashboardListarComponent } from './pages/dashboard/dashboard-listar/dashboard-listar.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { PedidoCadastrarComponent } from './pages/pedido/pedido-cadastrar/pedido
     ClienteAlterarComponent,
     PedidoListarComponent,
     PedidoCadastrarComponent,
+    DashboardListarComponent,
   ],
   imports: [
     BrowserModule,

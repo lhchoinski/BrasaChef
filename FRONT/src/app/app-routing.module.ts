@@ -7,6 +7,7 @@ import { ClienteListarComponent } from "./pages/cliente/cliente-listar/cliente-l
 import { ClienteCadastrarComponent } from "./pages/cliente/cliente-cadastrar/cliente-cadastrar/cliente-cadastrar.component";
 import { ClienteAlterarComponent } from "./pages/cliente/cliente-alterar/cliente-alterar.component";
 import { PedidoListarComponent } from "./pages/pedido/pedido-listar/pedido-listar.component";
+import { DashboardListarComponent } from "./pages/dashboard/dashboard-listar/dashboard-listar.component";
 
 const routes: Routes = [
   
@@ -41,6 +42,10 @@ const routes: Routes = [
   {
     path: "pages/pedido/cadastrar",
     component: PedidoListarComponent,
+  },
+  {
+    path: "pages/dashboard/listar",
+    component: DashboardListarComponent,
   },
 ];
 

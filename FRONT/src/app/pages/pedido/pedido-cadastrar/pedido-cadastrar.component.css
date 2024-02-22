@@ -3,3 +3,13 @@
     display: block;
   }
   
+  .subtitle {
+    font-size: 18px; /* Aumentando o tamanho da fonte */
+    font-weight: bold;
+    color: #333; /* Mudando a cor do texto para um tom mais escuro */
+    text-transform: uppercase; /* Transformando o texto em maiúsculas */
+    text-align: center; /* Centralizando o texto */
+    margin-bottom: 10px; /* Adicionando margem inferior para separar do conteúdo abaixo */
+    border-bottom: 2px solid #ccc; /* Adicionando uma linha de separação */
+    padding-bottom: 10px; /* Adicionando espaço abaixo do título */
+  }
