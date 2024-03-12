@@ -3,7 +3,7 @@ POST http://localhost:5074/api/Cliente/post
 Content-Type: application/json
 
 { 
-  "nome": "Luiz",
+  "nome": "Joao",
   "contato": "41991787723",
   "endereco": "av das torres"
 }
