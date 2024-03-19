@@ -1,9 +1,9 @@
 .input {
-    width: 50%;
-    display: block;
-  }
-  
-  .subtitle {
+  margin: 15px;
+
+}
+
+.subtitle {
     font-size: 18px; /* Aumentando o tamanho da fonte */
     font-weight: bold;
     color: #333; /* Mudando a cor do texto para um tom mais escuro */
@@ -12,4 +12,11 @@
     margin-bottom: 10px; /* Adicionando margem inferior para separar do conteúdo abaixo */
     border-bottom: 2px solid #ccc; /* Adicionando uma linha de separação */
     padding-bottom: 10px; /* Adicionando espaço abaixo do título */
+  }
+
+  .addItem{
+
+    width: 50px;
+    margin: 15px;
+    margin-top: -15px;
   }

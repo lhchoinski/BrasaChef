@@ -7,5 +7,5 @@ export interface Pedido {
   clienteId: number;
   itens: ItemPedido[];
   valorTotal?: number;
-  createdAt?: Date;
+  createdAt?: string;
 }
