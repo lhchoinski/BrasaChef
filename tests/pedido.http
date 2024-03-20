@@ -40,4 +40,4 @@ Content-Type: application/json
   }
 
 ### Excluir um pedido pelo ID
-DELETE http://localhost:5074/api/Pedido/Delete/5
+DELETE http://localhost:5074/api/Pedido/Delete/14
