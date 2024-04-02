@@ -12,6 +12,8 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { CurrencyMaskModule } from "ng2-currency-mask";
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -57,6 +59,8 @@ import { DashboardListarComponent } from './pages/dashboard/dashboard-listar/das
     MatInputModule,
     MatFormFieldModule,
     MatSnackBarModule,
+    CurrencyMaskModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent],

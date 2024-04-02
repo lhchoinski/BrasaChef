@@ -6,34 +6,23 @@
   <mat-card-content>
     <mat-form-field class="input" id="nome">
       <mat-label>Nome</mat-label>
-      <input
-        placeholder="Ex. Bolacha"
-        matInput
-        type="text"
-        [(ngModel)]="nome"
-      />
-      
+      <input placeholder="Ex. Bolacha" matInput type="text" [(ngModel)]="nome" />
+
     </mat-form-field>
 
     <mat-form-field class="input" id="qtda">
       <mat-label>Quantidade</mat-label>
-      <input
-        placeholder="Ex. 123"
-        matInput
-        type="text"
-        [(ngModel)]="qtda"
+      <input placeholder="Ex. 123" matInput type="text" [(ngModel)]="qtda"
+       
       />
       
+
     </mat-form-field>
     <mat-form-field class="input" id="preco">
       <mat-label>Preço</mat-label>
-      <span matPrefix>R$ &nbsp;</span>
-      <input
-        placeholder="Ex. R$ 15.00"
-        matInput
-        type="text"
-        [(ngModel)]="preco"
-      />
+      
+      <input placeholder="Ex. R$ 15.00" matInput type="text" [(ngModel)]="preco" currencyMask
+        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }" />
     </mat-form-field>
   </mat-card-content>
   <tr>
@@ -41,15 +30,15 @@
       <mat-card-actions>
         <button color="" mat-stroked-button routerLink="/pages/produto/listar">Voltar</button>
       </mat-card-actions>
-</td>
-<td>
-  <mat-card-actions>
-    <button color="warn" mat-stroked-button (click)="cadastrar()">Cadastrar</button>
-  </mat-card-actions>
-  
-</td>
+    </td>
+    <td>
+      <mat-card-actions>
+        <button color="warn" mat-stroked-button (click)="cadastrar()">Cadastrar</button>
+      </mat-card-actions>
 
-  
-</tr>
-  
+    </td>
+
+
+  </tr>
+
 </mat-card>

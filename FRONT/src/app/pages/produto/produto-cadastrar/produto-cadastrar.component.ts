@@ -4,12 +4,15 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { Produto } from "src/app/models/produto.model";
 
+
+
 @Component({
   selector: "app-produto-cadastrar",
   templateUrl: "./produto-cadastrar.component.html",
   styleUrls: ["./produto-cadastrar.component.css"],
 })
 export class ProdutoCadastrarComponent {
+
   nome: string = "";
   preco: string = "";
   qtda: string = "";
