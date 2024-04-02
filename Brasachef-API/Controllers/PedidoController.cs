@@ -28,8 +28,8 @@ namespace Brasachef_API.Controllers
             {
                 List<Pedido> pedidos = _context.Pedidos
                     .Include(x => x.Cliente)
-                    .Include(x => x.Itens) // Inclui a lista de itens do pedido
-                        .ThenInclude(x => x.Produto) // Inclui o produto associado a cada item do pedido
+                    .Include(x => x.Itens) /
+                        .ThenInclude(x => x.Produto)
                     .ToList();
 
                 return pedidos.Count == 0 ? NotFound("Não existem pedidos!") : Ok(pedidos);
@@ -40,7 +40,7 @@ namespace Brasachef_API.Controllers
             }
         }
 
-        // GET: api/Pedido/5
+        // GET: api/Pedido/id
         [HttpGet("{id}")]
         [Route("getById/{id}")]
         public async Task<ActionResult<Pedido>> GetPedido(int id)
@@ -50,7 +50,7 @@ namespace Brasachef_API.Controllers
                 Pedido pedido = await _context.Pedidos
                     .Include(x => x.Cliente)
                     .Include(x => x.Itens)
-                        .ThenInclude(x => x.Produto) // Inclui o produto associado a cada item do pedido
+                        .ThenInclude(x => x.Produto)
                     .FirstOrDefaultAsync(x => x.PedidoId == id);
 
                 return pedido == null ? NotFound("Pedido não encontrado!") : Ok(pedido);
@@ -60,8 +60,7 @@ namespace Brasachef_API.Controllers
                 return BadRequest(e.Message);
             }
         }
-        // PUT: api/Pedido/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // PUT: api/Pedido/id
         [HttpPut("{id}")]
         [Route("put/{id}")]
         public async Task<IActionResult> PutPedido(int id, Pedido pedido)
@@ -93,64 +92,56 @@ namespace Brasachef_API.Controllers
         }
 
         // POST: api/Pedido/post
-[HttpPost]
-[Route("post")]
-public IActionResult Post([FromBody] Pedido pedido)
-{
-    try
-    {
-        Cliente cliente = _context.Clientes.Find(pedido.ClienteId);
-
-        if (cliente == null)
+        [HttpPost]
+        [Route("post")]
+        public IActionResult Post([FromBody] Pedido pedido)
         {
-            return NotFound("O cliente informado não existe!");
+            try
+            {
+                Cliente cliente = _context.Clientes.Find(pedido.ClienteId);
+
+                if (cliente == null)
+                {
+                    return NotFound("O cliente informado não existe!");
+                }
+
+                pedido.CreatedAt = DateTime.UtcNow;
+                pedido.Cliente = cliente;
+
+                double valorTotal = 0;
+                foreach (var item in pedido.Itens)
+                {
+
+                    Produto produto = _context.Produtos.Find(item.ProdutoId);
+                    if (produto == null)
+                    {
+                        return NotFound("O produto do item não existe!");
+                    }
+
+                    if (produto.Preco.HasValue)
+                    {
+                        valorTotal += produto.Preco.Value * item.Quantidade;
+                    }
+                    else
+                    {
+                        return BadRequest("O preço do produto é nulo!");
+                    }
+                }
+
+                pedido.ValorTotal = valorTotal;
+
+                _context.Pedidos.Add(pedido);
+                _context.SaveChanges();
+
+                return Created("", pedido);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
-        // Se o cliente existe, prossegue com a criação do pedido
-        pedido.CreatedAt = DateTime.UtcNow;
-        pedido.Cliente = cliente;
-
-        // Calcular o valor total do pedido
-        double valorTotal = 0;
-        foreach (var item in pedido.Itens)
-        {
-            // Carregar o produto correspondente ao produtoId do item
-            Produto produto = _context.Produtos.Find(item.ProdutoId);
-            if (produto == null)
-            {
-                return NotFound("O produto do item não existe!");
-            }
-
-            // Verificar se o preço do produto não é nulo antes de somar ao valor total
-            if (produto.Preco.HasValue)
-            {
-                valorTotal += produto.Preco.Value * item.Quantidade;
-            }
-            else
-            {
-                return BadRequest("O preço do produto é nulo!");
-            }
-        }
-
-        // Definir o valor total calculado no pedido
-        pedido.ValorTotal = valorTotal;
-
-        // Adicionar o pedido ao contexto e salvar no banco de dados
-        _context.Pedidos.Add(pedido);
-        _context.SaveChanges();
-
-        return Created("", pedido);
-    }
-    catch (Exception e)
-    {
-        return BadRequest(e.Message);
-    }
-}
-
-
-
-
-        // DELETE: api/Pedido/5
+        // DELETE: api/Pedido/id
         [HttpDelete("{id}")]
         [Route("Delete/{id}")]
         public async Task<IActionResult> DeletePedido(int id)

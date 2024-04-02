@@ -26,21 +26,21 @@ namespace Brasachef_API.Controllers
         [Route("getAll")]
         public async Task<ActionResult<IEnumerable<Produto>>> GetProdutos()
         {
-          if (_context.Produtos == null)
-          {
-              return NotFound();
-          }
+            if (_context.Produtos == null)
+            {
+                return NotFound();
+            }
             return await _context.Produtos.ToListAsync();
         }
 
-        // GET: api/Produto/5
+        // GET: api/Produto/id
         [HttpGet("{id}")]
         public async Task<ActionResult<Produto>> GetProduto(int id)
         {
-          if (_context.Produtos == null)
-          {
-              return NotFound();
-          }
+            if (_context.Produtos == null)
+            {
+                return NotFound();
+            }
             var produto = await _context.Produtos.FindAsync(id);
 
             if (produto == null)
@@ -51,8 +51,7 @@ namespace Brasachef_API.Controllers
             return produto;
         }
 
-        // PUT: api/Produto/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // PUT: api/Produto/id
         [HttpPut]
         [Route("alterar/{id}")]
         public async Task<IActionResult> PutProduto(int id, Produto produto)
@@ -83,23 +82,22 @@ namespace Brasachef_API.Controllers
             return NoContent();
         }
 
-        // POST: api/Produto
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // POST
         [HttpPost]
         [Route("post")]
         public async Task<ActionResult<Produto>> PostProduto(Produto produto)
         {
-          if (_context.Produtos == null)
-          {
-              return Problem("Entity set 'AppDataContext.Produtos'  is null.");
-          }
+            if (_context.Produtos == null)
+            {
+                return Problem("Entity set 'AppDataContext.Produtos'  is null.");
+            }
             _context.Produtos.Add(produto);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetProduto", new { id = produto.ProdutoId }, produto);
         }
 
-        // DELETE: api/Produto/5
+        // DELETE: api/Produto/id
         [HttpDelete]
         [Route("deletar/{id}")]
         public async Task<IActionResult> DeleteProduto(int id)

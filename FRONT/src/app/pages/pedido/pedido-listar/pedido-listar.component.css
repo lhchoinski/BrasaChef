@@ -1,35 +1,31 @@
 table {
-    width: 100%;
-  }
-  
-  td,
-  th {
-    text-align: center;
-  }
-  
-  .item{
-    display: flex;
-    align-items: center;
-    
-  }
-  
-  
-  .material-symbols-outlined{
-  
+  width: 100%;
+}
+
+td,
+th {
+  text-align: center;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+
+}
+
+
+.material-symbols-outlined {
+
   margin: 1px;
-  }
+}
 
-  .title {
-    font-size: 20px; /* Aumentando o tamanho da fonte */
-    font-weight: bold;
-    color: #333; /* Mudando a cor do texto para um tom mais escuro */
-    text-transform: uppercase; /* Transformando o texto em maiúsculas */
-    text-align: center; /* Centralizando o texto */
-    margin-bottom: 10px; /* Adicionando margem inferior para separar do conteúdo abaixo */
-    border-bottom: 2px solid #ccc; /* Adicionando uma linha de separação */
-    padding-bottom: 10px; /* Adicionando espaço abaixo do título */
-  }
-
-  li{
-    
-  }
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 10px;
+}

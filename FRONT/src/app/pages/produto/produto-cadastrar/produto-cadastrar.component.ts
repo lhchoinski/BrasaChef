@@ -16,20 +16,20 @@ export class ProdutoCadastrarComponent {
   nome: string = "";
   preco: string = "";
   qtda: string = "";
- 
+
 
   constructor(
     private client: HttpClient,
     private router: Router,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
 
   cadastrar(): void {
     let produto: Produto = {
       nome: this.nome,
       preco: this.preco,
-      qtda:  this.qtda
+      qtda: this.qtda
     };
 
     this.client
@@ -38,7 +38,7 @@ export class ProdutoCadastrarComponent {
         produto
       )
       .subscribe({
-        //A requição funcionou
+
         next: (produto) => {
           this.snackBar.open(
             "Produto cadastrado com sucesso!!",
@@ -51,7 +51,7 @@ export class ProdutoCadastrarComponent {
           );
           this.router.navigate(["pages/produto/listar"]);
         },
-        //A requição não funcionou
+
         error: (erro) => {
           console.log(erro);
         },

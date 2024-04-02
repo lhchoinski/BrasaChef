@@ -1,38 +1,38 @@
-.menu{
+.menu {
     background-color: transparent;
     color: white;
     border: none;
 }
 
-.container{
+.container {
     height: calc(100% - 64px);
 }
 
-.item{
+.item {
     display: flex;
     align-items: center;
-    
+
 }
 
-.icon{
+.icon {
     margin-right: 8px;
 }
 
-.content{
+.content {
     padding: 8px;
 }
 
-.material-symbols-outlined{
+.material-symbols-outlined {
 
     margin: 10px;
 }
 
-.title{
+.title {
     margin-left: 10px;
     color: aliceblue;
 }
 
-.header{
+.header {
 
     background-color: #28326d;
 }

@@ -26,7 +26,7 @@ export class DashboardListarComponent implements OnInit {
       .subscribe(
         data => {
           console.log('Dados dos clientes:', data);
-          this.totalClientes = data.length; // Assumindo que o array de clientes é retornado
+          this.totalClientes = data.length;
         },
         error => {
           console.error('Erro ao obter total de clientes:', error);
@@ -39,7 +39,7 @@ export class DashboardListarComponent implements OnInit {
       .subscribe(
         data => {
           console.log('Dados dos pedidos:', data);
-          this.totalPedidos = data.length; // Assumindo que o array de pedidos é retornado
+          this.totalPedidos = data.length;
         },
         error => {
           console.error('Erro ao obter total de pedidos:', error);
@@ -52,7 +52,7 @@ export class DashboardListarComponent implements OnInit {
       .subscribe(
         data => {
           console.log('Dados dos produtos:', data);
-          this.totalProdutos = data.length; // Assumindo que o array de produtos é retornado
+          this.totalProdutos = data.length;
         },
         error => {
           console.error('Erro ao obter total de produtos:', error);

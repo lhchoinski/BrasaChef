@@ -12,7 +12,7 @@ import { Produto } from "src/app/models/produto.model";
   styleUrls: ['./pedido-cadastrar.component.css']
 })
 export class PedidoCadastrarComponent implements OnInit {
-  
+
   pedido: Pedido = { clienteId: 0, itens: [] };
   clientes: Cliente[] = [];
   produtos: Produto[] = [];
@@ -21,7 +21,7 @@ export class PedidoCadastrarComponent implements OnInit {
     private client: HttpClient,
     private router: Router,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   cadastrar(): void {
     this.client.post<Pedido>(

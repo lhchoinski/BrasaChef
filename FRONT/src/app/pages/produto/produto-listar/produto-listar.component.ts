@@ -1,10 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import {
-  MatTable,
-  MatTableDataSource,
-} from "@angular/material/table";
 import { Produto } from "src/app/models/produto.model";
 
 @Component({
@@ -28,20 +24,18 @@ export class ProdutoListarComponent {
     private client: HttpClient,
     private snackBar: MatSnackBar
   ) {
-    //Um problema de CORS ao fazer uma requisição para a
-    //nossa API
+
   }
 
   ngOnInit(): void {
     this.client
       .get<Produto[]>("https://localhost:7119/api/Produto/getAll")
       .subscribe({
-        //Requisição com sucesso
         next: (produtos) => {
           console.table(produtos);
           this.produtos = produtos;
         },
-        //Requisição com erro
+
         error: (erro) => {
           console.log(erro);
         },
@@ -64,13 +58,13 @@ export class ProdutoListarComponent {
               verticalPosition: "top",
             }
           );
-          // Recarrega a página após a navegação
+
           window.location.reload();
         },
         error: (erro) => {
           console.log(erro);
         },
       });
-      
+
   }
 }

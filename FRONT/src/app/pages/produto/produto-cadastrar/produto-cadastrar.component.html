@@ -12,15 +12,13 @@
 
     <mat-form-field class="input" id="qtda">
       <mat-label>Quantidade</mat-label>
-      <input placeholder="Ex. 123" matInput type="text" [(ngModel)]="qtda"
-       
-      />
-      
+      <input placeholder="Ex. 123" matInput type="text" [(ngModel)]="qtda" />
+
 
     </mat-form-field>
     <mat-form-field class="input" id="preco">
       <mat-label>Preço</mat-label>
-      
+
       <input placeholder="Ex. R$ 15.00" matInput type="text" [(ngModel)]="preco" currencyMask
         [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }" />
     </mat-form-field>

@@ -23,44 +23,24 @@ namespace AssadosCombate_API.Controllers
 
         // GET: api/Cliente
         [HttpGet]
-         [Route("getAll")]
+        [Route("getAll")]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
         {
-          if (_context.Clientes == null)
-          {
-              return NotFound();
-          }
+            if (_context.Clientes == null)
+            {
+                return NotFound();
+            }
             return await _context.Clientes.ToListAsync();
         }
 
-       [HttpGet]
-    [Route("getByNome/{nome}")]
-    public IActionResult GetByNome([FromRoute] string nome)
-    {
-    try
-    {
-        Cliente cliente = _context.Clientes.FirstOrDefault(x => x.Nome == nome);
-        if (cliente != null)
-        {
-            return Ok(cliente);
-        }
-        return NotFound($"O cliente '{nome}' não foi encontrado.");
-    }
-    catch (Exception e)
-    {
-        return BadRequest($"Erro ao buscar Cliente: {e.Message}");
-    }
-    }
-
-
-        // GET: api/Cliente/5
+        // GET: api/Cliente/id
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> GetCliente(int id)
         {
-          if (_context.Clientes == null)
-          {
-              return NotFound();
-          }
+            if (_context.Clientes == null)
+            {
+                return NotFound();
+            }
             var cliente = await _context.Clientes.FindAsync(id);
 
             if (cliente == null)
@@ -71,9 +51,8 @@ namespace AssadosCombate_API.Controllers
             return cliente;
         }
 
-        // PUT: api/Cliente/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-         [HttpPut]
+        // PUT: api/Cliente/id
+        [HttpPut]
         [Route("put/{id}")]
         public async Task<IActionResult> PutCliente(int id, Cliente cliente)
         {
@@ -103,13 +82,14 @@ namespace AssadosCombate_API.Controllers
             return NoContent();
         }
 
-         [HttpPost]
+        //POST
+        [HttpPost]
         [Route("post")]
         public IActionResult Post([FromBody] Cliente cliente)
         {
             try
             {
-               
+
                 _context.Clientes.Add(cliente);
                 _context.SaveChanges();
 
@@ -121,7 +101,7 @@ namespace AssadosCombate_API.Controllers
             }
         }
 
-        // DELETE: api/Cliente/5
+        // DELETE: api/Cliente/id
         [HttpDelete]
         [Route("Delete/{id}")]
         public async Task<IActionResult> DeleteCliente(int id)

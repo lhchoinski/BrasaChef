@@ -20,23 +20,20 @@ export class ProdutoAlterarComponent implements OnInit {
     private router: Router,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    // Subscreva-se aos parâmetros da rota para obter o produtoId
     this.route.params.subscribe((params) => {
-      this.produtoId = +params['id']; // "+" converte o parâmetro para um número
-      // Agora, você pode usar this.produtoId para fazer uma requisição GET e obter os detalhes do produto
+      this.produtoId = +params['id'];
       this.obterDetalhesProduto();
     });
   }
-  
+
   obterDetalhesProduto(): void {
     this.client
       .get<Produto>(`https://localhost:7119/api/Produto/${this.produtoId}`)
       .subscribe({
         next: (produto) => {
-          // Preencha as propriedades do componente com os detalhes do produto
           this.nome = produto.nome;
           this.preco = produto.preco;
           this.qtda = produto.qtda;
@@ -49,25 +46,25 @@ export class ProdutoAlterarComponent implements OnInit {
         },
       });
   }
-  
+
 
   alterar(): void {
     let produto: Produto = {
-      produtoId: this.produtoId, // Certifique-se de incluir o produtoId se necessário
+      produtoId: this.produtoId,
       nome: this.nome,
       preco: this.preco!,
       qtda: this.qtda
     };
 
-    
-  
+
+
     this.client
       .put<Produto>(
         `https://localhost:7119/api/Produto/alterar/${this.produtoId}`,
         produto
       )
       .subscribe({
-        //A requição funcionou
+
         next: (produto) => {
           this.snackBar.open(
             "Produto Alterado com sucesso!!",
@@ -80,12 +77,12 @@ export class ProdutoAlterarComponent implements OnInit {
           );
           this.router.navigate(["pages/produto/listar"]);
         },
-        //A requição não funcionou
+
         error: (erro) => {
           console.log(erro);
         },
       });
-      
-      
+
+
   }
 }

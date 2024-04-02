@@ -11,7 +11,7 @@ import { DashboardListarComponent } from "./pages/dashboard/dashboard-listar/das
 import { PedidoCadastrarComponent } from "./pages/pedido/pedido-cadastrar/pedido-cadastrar.component";
 
 const routes: Routes = [
-  
+
   {
     path: "pages/produto/listar",
     component: ProdutoListarComponent,
@@ -54,4 +54,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

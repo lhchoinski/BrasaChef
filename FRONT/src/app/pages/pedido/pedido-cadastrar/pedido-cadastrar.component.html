@@ -1,11 +1,11 @@
-<mat-card >
+<mat-card>
 
-<mat-card-header>
+  <mat-card-header>
     <mat-card-title class="subtitle">Casdastro de Pedidos</mat-card-title>
     <mat-card-subtitle>&nbsp;</mat-card-subtitle>
   </mat-card-header>
 
-<mat-form-field class="input"> 
+  <mat-form-field class="input">
     <mat-label>Selecione um cliente</mat-label>
     <mat-select [(ngModel)]="pedido.clienteId">
       <mat-option *ngFor="let cliente of clientes" [value]="cliente.clienteId">
@@ -14,7 +14,7 @@
     </mat-select>
   </mat-form-field>
 
-  
+
   <div *ngFor="let item of pedido.itens; let i=index">
     <mat-form-field class="input">
       <mat-label>Selecione um produto</mat-label>
@@ -28,32 +28,33 @@
       <mat-label>Quantidade</mat-label>
       <input matInput type="number" [(ngModel)]="pedido.itens[i].quantidade">
     </mat-form-field>
-    
+
     <button mat-icon-button color="warn" (click)="removerItem(i)">
-        <span class="material-symbols-outlined">
-            delete
-            </span>
+      <span class="material-symbols-outlined">
+        delete
+      </span>
     </button>
   </div>
   <br>
-  
-  <button class="addItem" color="primary" button mat-fab extended routerLink="primary" (click)="adicionarItem()"> Adicionar Item 
-</button>
+
+  <button class="addItem" color="primary" button mat-fab extended routerLink="primary" (click)="adicionarItem()">
+    Adicionar Item
+  </button>
   <tr>
     <td>
       <mat-card-actions>
         <button color="" mat-stroked-button routerLink="/pages/pedido/listar">Voltar</button>
       </mat-card-actions>
-</td>
-<td>
-  <mat-card-actions>
-    <button mat-stroked-button color="warn" (click)="cadastrar()">Cadastrar Pedido</button>
-  </mat-card-actions>
-  
-</td>
+    </td>
+    <td>
+      <mat-card-actions>
+        <button mat-stroked-button color="warn" (click)="cadastrar()">Cadastrar Pedido</button>
+      </mat-card-actions>
 
-  
-</tr>
- 
- 
+    </td>
+
+
+  </tr>
+
+
 </mat-card>

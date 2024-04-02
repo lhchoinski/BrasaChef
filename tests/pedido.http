@@ -17,10 +17,6 @@ Content-Type: application/json
 }
 
 
-
-
-
-
 ### Obter todos os pedidos
 GET http://localhost:5074/api/Pedido/getAll
 
