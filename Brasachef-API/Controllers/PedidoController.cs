@@ -28,8 +28,8 @@ namespace Brasachef_API.Controllers
             {
                 List<Pedido> pedidos = _context.Pedidos
                     .Include(x => x.Cliente)
-                    .Include(x => x.Itens) /
-                        .ThenInclude(x => x.Produto)
+                    .Include(x => x.Itens)
+                    .ThenInclude(x => x.Produto)
                     .ToList();
 
                 return pedidos.Count == 0 ? NotFound("Não existem pedidos!") : Ok(pedidos);
@@ -68,6 +68,25 @@ namespace Brasachef_API.Controllers
             if (id != pedido.PedidoId)
             {
                 return BadRequest();
+            }
+            double valorTotal = 0;
+            foreach (var item in pedido.Itens)
+            {
+
+                Produto produto = _context.Produtos.Find(item.ProdutoId);
+                if (produto == null)
+                {
+                    return NotFound("O produto do item não existe!");
+                }
+
+                if (produto.Preco.HasValue)
+                {
+                    valorTotal += produto.Preco.Value * item.Quantidade;
+                }
+                else
+                {
+                    return BadRequest("O preço do produto é nulo!");
+                }
             }
 
             _context.Entry(pedido).State = EntityState.Modified;
@@ -156,7 +175,13 @@ namespace Brasachef_API.Controllers
                 return NotFound();
             }
 
+            // Exclua os itens do pedido associados a este pedido
+            var itensPedidos = _context.ItensPedidos.Where(item => item.Id == id);
+            _context.ItensPedidos.RemoveRange(itensPedidos);
+
+            // Agora exclua o próprio pedido
             _context.Pedidos.Remove(pedido);
+
             await _context.SaveChangesAsync();
 
             return NoContent();

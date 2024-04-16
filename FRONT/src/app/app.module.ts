@@ -28,6 +28,7 @@ import { ClienteAlterarComponent } from './pages/cliente/cliente-alterar/cliente
 import { PedidoListarComponent } from './pages/pedido/pedido-listar/pedido-listar.component';
 import { PedidoCadastrarComponent } from './pages/pedido/pedido-cadastrar/pedido-cadastrar.component';
 import { DashboardListarComponent } from './pages/dashboard/dashboard-listar/dashboard-listar.component';
+import { PedidoAlterarComponent } from './pages/pedido/pedido-alterar/pedido-alterar.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { DashboardListarComponent } from './pages/dashboard/dashboard-listar/das
     PedidoListarComponent,
     PedidoCadastrarComponent,
     DashboardListarComponent,
+    PedidoAlterarComponent,
   ],
   imports: [
     BrowserModule,

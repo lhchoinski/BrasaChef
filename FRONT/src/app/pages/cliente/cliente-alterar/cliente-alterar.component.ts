@@ -69,8 +69,6 @@ export class ClienteAlterarComponent {
       endereco: this.endereco
     };
 
-
-
     this.client
       .put<Cliente>(
         `https://localhost:7119/api/Cliente/put/${this.clienteId}`,

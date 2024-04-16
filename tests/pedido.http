@@ -24,7 +24,7 @@ GET http://localhost:5074/api/Pedido/getAll
 GET http://localhost:5074/api/Pedido/1
 
 ### Atualizar um pedido existente pelo ID
-PUT http://localhost:5074/api/Pedido/9
+PUT http://localhost:5074/api/Pedido/2
 Content-Type: application/json
 
 {

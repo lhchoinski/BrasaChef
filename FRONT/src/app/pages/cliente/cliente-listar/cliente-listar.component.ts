@@ -49,9 +49,9 @@ export class ClienteListarComponent {
         `https://localhost:7119/api/Cliente/delete/${clienteId}`
       )
       .subscribe({
-        next: (produto) => {
+        next: (cliente) => {
           this.snackBar.open(
-            "Produto alterado com sucesso!!",
+            "Produto deletado com sucesso!!",
             "Fechar",
             {
               duration: 2000,

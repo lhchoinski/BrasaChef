@@ -3,6 +3,7 @@ using System;
 using Brasachef_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Brasachef_API.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    partial class AppDataContextModelSnapshot : ModelSnapshot
+    [Migration("20240416174248_UpdateController")]
+    partial class UpdateController
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,7 +63,7 @@ namespace Brasachef_API.Migrations
 
                     b.HasIndex("ProdutoId");
 
-                    b.ToTable("ItensPedidos");
+                    b.ToTable("ItemPedido");
                 });
 
             modelBuilder.Entity("Brasachef_API.Models.Pedido", b =>
